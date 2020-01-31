@@ -1,2 +1,7 @@
 GGJ_2020/Library/
 GGJ_2020/Temp/
+GGJ_2020/obj/
+GGJ_2020/.vs/
+
+*.csproj
+*.sln
