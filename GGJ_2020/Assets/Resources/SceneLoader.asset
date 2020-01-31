@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c22f361fc671f384d9145de961b8d793, type: 3}
+  m_Name: SceneLoader
+  m_EditorClassIdentifier: 
+  Title:
+    sceneAsset: {fileID: 0}
+    sceneName: 
+  CharacterSelect:
+    sceneAsset: {fileID: 0}
+    sceneName: 
+  Game:
+    sceneAsset: {fileID: 102900000, guid: 29419fec502cda84db0c52e836ebd635, type: 3}
+    sceneName: GameUI
+  End:
+    sceneAsset: {fileID: 0}
+    sceneName: 

@@ -7,7 +7,7 @@ using UnityEngine;
 public class Doodad : MonoBehaviour
 {
 #if UNITY_EDITOR
-    [UnityEditor.MenuItem("Game/SnapToGrid")]
+    //[UnityEditor.MenuItem("Game/SnapToGrid")]
     public static void Snap()
     {
         foreach (var go in UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects())
