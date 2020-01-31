@@ -13,21 +13,21 @@ public class GamePad
 
     public int player
     { get; private set; }
-
-    static Gamepad NullGamepad = new Gamepad();
+    
     Gamepad gamepad
     {
         get
         {
             var all = Gamepad.all;
             if (all.Count < player || player < 1)
-                return NullGamepad;
+                return null;
             return all[player - 1];
         }
     }
 
     public State GetButton(Buttons button)
     {
+        if (gamepad == null) return new State();
         switch (button)
         {
             case Buttons.dpad_up:
@@ -95,7 +95,7 @@ public class GamePad
     {
         get
         {
-            return gamepad.leftStick.ReadValue();
+            return gamepad == null ? new Vector2() : gamepad.leftStick.ReadValue();
         }
     }
 
@@ -103,7 +103,7 @@ public class GamePad
     {
         get
         {
-            return gamepad.rightStick.ReadValue();
+            return gamepad == null ? new Vector2() : gamepad.rightStick.ReadValue();
         }
     }
 
