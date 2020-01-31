@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:GGJ_2020/Assets/Environment.meta
 guid: ac1f615c384ffda4da6ec06a3d2f3a33
+=======
+guid: af7ca71438a5b944894ef6d407904955
+>>>>>>> d06596082375f7186b48795e26cb7d30348422a1:GGJ_2020/Assets/Scripts.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
