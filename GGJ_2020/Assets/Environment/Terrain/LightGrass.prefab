@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 9137133599168907574}
   - component: {fileID: 9137133599168907569}
   - component: {fileID: 9137133599168907575}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Quad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,7 +103,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9137133600623835394}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LightGrass
   m_TagString: Untagged
   m_Icon: {fileID: 0}

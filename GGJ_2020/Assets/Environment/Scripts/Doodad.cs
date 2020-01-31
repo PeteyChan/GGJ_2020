@@ -6,19 +6,7 @@ using UnityEngine;
 [Attributes.AlwaysRepaint]
 public class Doodad : MonoBehaviour
 {
-#if UNITY_EDITOR
-    //[UnityEditor.MenuItem("Game/SnapToGrid")]
-    public static void Snap()
-    {
-        foreach (var go in UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects())
-        {
-            var pos = go.transform.position;
-            pos.x = Mathf.RoundToInt(pos.x);
-            pos.y = Mathf.RoundToInt(pos.y);
-            pos.z = Mathf.RoundToInt(pos.z);
-        }
-    }
-#endif
+
 }
 
 #if UNITY_EDITOR
@@ -34,7 +22,7 @@ namespace Inspectors
 
                 var pos = target.transform.position;
                 pos.x = Mathf.RoundToInt(pos.x);
-                pos.y = 0;
+                pos.y = transform.position.y;
                 pos.z = Mathf.RoundToInt(pos.z);
                 transform.position = pos;
             }

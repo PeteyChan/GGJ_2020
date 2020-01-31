@@ -7,10 +7,15 @@ public class EnvironmentSettings : ScriptableObject
 {
     public List<TerrainItem> Fields = new List<TerrainItem>();
     public List<DoodadItem> Doodads = new List<DoodadItem>();
+    public List<GameObject> Bounds = new List<GameObject>();
 
     public int SizeX;
     public int SizeY;
-    public int Seed;
+    public int TerrainSeed;
+    public int DoodadSeed;
+
+    public bool MirrorTerrain;
+    public bool MirrorDoodads;
 
     [System.Serializable]
     public class TerrainItem
@@ -27,66 +32,181 @@ public class EnvironmentSettings : ScriptableObject
         public bool Walkable;
     }
 
-    List<GameObject> spawned = new List<GameObject>();
+    List<GameObject> terrain = new List<GameObject>();
+    List<GameObject> doodads = new List<GameObject>();
+
+    // Map //
 
     public void GererateMap()
     {
-        int totalWeight = 0;
-        foreach (var item in Fields)
-            totalWeight += item.Weighting;
-
-        Random.InitState(Seed);
-
-        for (int x = 0; x < SizeX; ++x)
-            for (int z = 0; z < SizeY; ++z)
-            {
-                var target = Random.Range(0, totalWeight);
-                var count = 0;
-                foreach (var item in Fields)
-                {
-                    count += item.Weighting;
-                    if (count > target)
-                    {
-                        if (item.TerrainType)
-                            spawned.Add(Instantiate(item.TerrainType, new Vector3(x, 0, z), Quaternion.identity));
-                        break;
-                    }
-                }
-            }
-
-        totalWeight = 0;
-        foreach (var item in Doodads)
-            totalWeight += item.Weighting;
-        
-        for (int x = 0; x < SizeX; ++x)
-            for (int z = 0; z < SizeY; ++z)
-            {
-                var target = Random.Range(0, totalWeight);
-                var count = 0;
-                foreach (var item in Doodads)
-                {
-                    count += item.Weighting;
-                    if (count > target)
-                    {
-                        if (item.Doodad)
-                        {
-                            var go = Instantiate(item.Doodad, new Vector3(x, 0, z), Quaternion.identity);
-                            if (!item.Walkable)
-                            {
-                                go.AddComponent<Obstacle>();
-                                go.AddComponent<BoxCollider>();
-                            }
-                            spawned.Add(go);
-                        }
-                        break;
-                    }
-                }
-            }
+        GenerateTerrain();
+        GenerateDoodads();
     }
 
     public void ClearMap()
     {
-        foreach (var obj in spawned)
+        ClearTerrain();
+        ClearDoodads();
+    }
+
+    // Terrain //
+
+    public void GenerateTerrain()
+    {
+        GenerateBounds();
+        ClearTerrain();
+        Random.InitState(TerrainSeed);
+        int totalWeight = 0;
+        foreach (var item in Fields)
+            totalWeight += item.Weighting;
+
+        void SpawnTerrain(int x, int y, bool mirror = false)
+        {
+            var target = Random.Range(0, totalWeight);
+            var count = 0;
+            foreach (var item in Fields)
+            {
+                count += item.Weighting;
+                if (count > target)
+                {
+                    if (item.TerrainType)
+                    {
+                        var go = Instantiate(item.TerrainType, new Vector3(x, 0, y), Quaternion.identity);
+                        terrain.Add(go);
+                        if (mirror)
+                        {
+                            go = Instantiate(go, new Vector3(-x, 0, y), Quaternion.identity);
+                            terrain.Add(go);
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+
+        for (int x = 0; x < SizeX; ++x)
+            for (int y = 0; y < SizeY; ++y)
+            {
+                if (MirrorTerrain)
+                    SpawnTerrain(x, y, true);
+                else
+                {
+                    SpawnTerrain(x, y);
+                    if (x != 0)
+                        SpawnTerrain(-x, y);
+                }
+            }
+    }
+
+    public void ClearTerrain()
+    {
+        foreach (var obj in terrain)
+        {
+            if (Application.isPlaying)
+                Destroy(obj);
+            else DestroyImmediate(obj);
+        }
+    }
+
+    // Doodads //
+
+    public void GenerateDoodads()
+    {
+        ClearDoodads();
+        Random.InitState(DoodadSeed);
+
+        var totalWeight = 0;
+
+        void SpawnDoodad(int x, int y, bool mirror = false)
+        {
+            var target = Random.Range(0, totalWeight);
+            var count = 0;
+            foreach (var item in Doodads)
+            {
+                count += item.Weighting;
+                if (count > target)
+                {
+                    if (item.Doodad)
+                    {
+                        var go = Instantiate(item.Doodad, new Vector3(x, 0, y), Quaternion.identity);
+                        go.AddComponent<Doodad>();
+                        if (!item.Walkable)
+                        {
+                            var collider = new GameObject();
+                            collider.AddComponent<Obstacle>();
+                            collider.AddComponent<BoxCollider>();
+                            collider.transform.parent = go.transform;
+                            collider.transform.localPosition = Vector3.zero;
+                            go.layer = Layers.Doodads;
+                        }
+                        doodads.Add(go);
+                        if (mirror && x != 0)
+                        {
+                            doodads.Add(Instantiate(go, new Vector3(-x, 0, y), Quaternion.identity));
+                        }
+                        doodads.Add(go);
+                    }
+                    break;
+                }
+            }
+        }
+
+        foreach (var item in Doodads)
+            totalWeight += item.Weighting;
+
+        for (int x = 0; x < SizeX; ++x)
+            for (int y = 0; y < SizeY; ++y)
+            {
+                if (MirrorDoodads && x != 0)
+                {
+                    SpawnDoodad(x, y, true);
+                }
+                else
+                {
+                    SpawnDoodad(x, y);
+                    if (x != 0)
+                        SpawnDoodad(-x, y);
+                }
+            }
+    }
+    
+    public void ClearDoodads()
+    {
+        foreach (var obj in doodads)
+        {
+            if (Application.isPlaying)
+                Destroy(obj);
+            else DestroyImmediate(obj);
+        }
+    }
+
+    // Bounds //
+
+    void GenerateBounds()
+    {
+        ClearBounds();
+
+        //right bounds
+        var barrier = new GameObject().AddComponent<BoxCollider>();
+        barrier.name = "Bounds";
+        barrier.transform.position = new Vector3(SizeX, 0, SizeY/2);
+        barrier.size = new Vector3(1, 5, SizeY + 2);
+        Bounds.Add(barrier.gameObject);
+        //left bounds;
+        barrier = Instantiate(barrier, new Vector3(-SizeX, 0, SizeY/2), Quaternion.identity);
+        Bounds.Add(barrier.gameObject);
+        //top bounds;
+        barrier = Instantiate(barrier, new Vector3(0, 0, SizeY), Quaternion.identity);
+        barrier.size = new Vector3((SizeX * 2) + 2, 5, 1);
+        Bounds.Add(barrier.gameObject);
+        //bot bounds
+        barrier = Instantiate(barrier, new Vector3(0, 0, -1), Quaternion.identity);
+        Bounds.Add(barrier.gameObject);
+    }
+
+    void ClearBounds()
+    {
+        foreach (var obj in Bounds)
         {
             if (Application.isPlaying)
                 Destroy(obj);
@@ -108,15 +228,55 @@ namespace Inspectors
         {
             using (new GUILayout.VerticalScope(EditorStyles.helpBox))
             {
-                if (GUILayout.Button("Generate Map"))
+                GUILayout.Label("Build", EditorStyles.boldLabel);
+
+                using (new GUILayout.HorizontalScope())
                 {
-                    target.ClearMap();
-                    target.GererateMap();
+                    if (GUILayout.Button("Generate Map"))
+                    {
+                        target.GererateMap();
+                    }
+
+                    if (GUILayout.Button("Randomize Map"))
+                    {
+                        target.TerrainSeed = Random.Range(int.MinValue, int.MaxValue);
+                        target.DoodadSeed = Random.Range(int.MinValue, int.MaxValue);
+                        target.GererateMap();
+                    }
+
+                    if (GUILayout.Button("Clear Map"))
+                    {
+                        target.ClearMap();
+                    }
+
                 }
 
-                if (GUILayout.Button("Clear Map"))
+                using (new GUILayout.HorizontalScope())
                 {
-                    target.ClearMap();
+                    if (GUILayout.Button("Generate Terrain"))
+                        target.GenerateTerrain();
+                    if (GUILayout.Button("Randomize Terrain"))
+                    {
+                        target.TerrainSeed = Random.Range(int.MinValue, int.MaxValue);
+                        target.GenerateTerrain();
+                    }
+                    if (GUILayout.Button("Clear Terrain"))
+                    {
+                        target.ClearTerrain();
+                    }
+                }
+
+                using (new GUILayout.HorizontalScope())
+                {
+                    if (GUILayout.Button("Generate Doodads"))
+                        target.GenerateDoodads();
+                    if (GUILayout.Button("Randomize Doodads"))
+                    {
+                        target.DoodadSeed = Random.Range(int.MinValue, int.MaxValue);
+                        target.GenerateDoodads();
+                    }
+                    if (GUILayout.Button("Clear Doodads"))
+                        target.ClearDoodads();
                 }
             }
 
@@ -127,13 +287,25 @@ namespace Inspectors
 
                 using (new GUILayout.HorizontalScope())
                 {
-                    if (GUILayout.Button("Generate Seed", GUILayout.Width(EditorGUIUtility.labelWidth)))
+                    if (GUILayout.Button("Terrain Seed", GUILayout.Width(EditorGUIUtility.labelWidth)))
                     {
-                        target.Seed = Random.Range(int.MinValue, int.MaxValue);
+                        target.TerrainSeed = Random.Range(int.MinValue, int.MaxValue);
                     }
 
-                    target.Seed = EditorGUILayout.IntField(target.Seed);
+                    target.TerrainSeed = EditorGUILayout.IntField(target.TerrainSeed);
                 }
+
+                using (new GUILayout.HorizontalScope())
+                {
+                    if (GUILayout.Button("Doodad Seed", GUILayout.Width(EditorGUIUtility.labelWidth)))
+                    {
+                        target.DoodadSeed = Random.Range(int.MinValue, int.MaxValue);
+                    }
+
+                    target.DoodadSeed = EditorGUILayout.IntField(target.DoodadSeed);
+                }
+
+
                 using (new GUILayout.HorizontalScope())
                 {
                     GUILayout.Label("Map Size ", GUILayout.Width(EditorGUIUtility.labelWidth));
@@ -141,6 +313,9 @@ namespace Inspectors
                     target.SizeX = EditorGUILayout.IntField(target.SizeX).clamp(10, 500);
                     target.SizeY = EditorGUILayout.IntField(target.SizeY).clamp(10, 500);
                 }
+
+                target.MirrorTerrain = EditorGUILayout.Toggle("Mirror Terrain", target.MirrorTerrain);
+                target.MirrorDoodads = EditorGUILayout.Toggle("Mirror Doodads", target.MirrorDoodads);
             }
 
             GUILayout.Label("");
@@ -159,7 +334,14 @@ namespace Inspectors
                 {
                     using (new GUILayout.HorizontalScope())
                     {
-                        target.Fields[i].TerrainType = EditorGUILayout.ObjectField(GUIContent.none, target.Fields[i].TerrainType, typeof(GameObject), false, GUILayout.Width(Screen.width / 2f)) as GameObject;
+                        var type = target.Fields[i].TerrainType;
+                        target.Fields[i].TerrainType = EditorGUILayout.ObjectField(GUIContent.none, type, typeof(GameObject), false, GUILayout.Width(Screen.width / 2f)) as GameObject;
+                        if (type != target.Fields[i].TerrainType)
+                        {
+                            foreach (Transform item in target.Fields[i].TerrainType.GetComponentInChildren<Transform>())
+                                item.gameObject.layer = Layers.Terrain;
+                        }
+
                         target.Fields[i].Weighting = EditorGUILayout.IntField(target.Fields[i].Weighting);
                         if (target.Fields[i].Weighting < 1)
                             target.Fields[i].Weighting = 1;
@@ -196,9 +378,17 @@ namespace Inspectors
                 {
                     using (new GUILayout.HorizontalScope())
                     {
-                        target.Doodads[i].Doodad = EditorGUILayout.ObjectField(GUIContent.none, target.Doodads[i].Doodad, typeof(GameObject), false, GUILayout.Width(Screen.width / 2f)) as GameObject;
+                        var type = target.Doodads[i].Doodad;
+                        target.Doodads[i].Doodad = EditorGUILayout.ObjectField(GUIContent.none, type, typeof(GameObject), false, GUILayout.Width(Screen.width / 2f)) as GameObject;
+                        if (type != target.Doodads[i].Doodad)
+                        {
+                            foreach (Transform item in target.Doodads[i].Doodad.GetComponentInChildren<Transform>())
+                                item.gameObject.layer = Layers.Doodads;
+                        }
+
+
                         target.Doodads[i].Weighting = EditorGUILayout.IntField(target.Doodads[i].Weighting, GUILayout.Width(size / 2f));
-                        target.Doodads[i].Walkable = EditorGUILayout.Toggle(target.Doodads[i].Walkable, GUILayout.Width(size/2f));
+                        target.Doodads[i].Walkable = EditorGUILayout.Toggle(target.Doodads[i].Walkable, GUILayout.Width(size / 2f));
                         if (target.Doodads[i].Weighting < 1)
                             target.Doodads[i].Weighting = 1;
                         if (GUILayout.Button("+", GUILayout.Width(24)))
@@ -214,7 +404,7 @@ namespace Inspectors
                     }
                 }
             }
-            
+
             EditorUtility.SetDirty(target);
         }
     }

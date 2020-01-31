@@ -65,6 +65,7 @@
     <Compile Include="Assets\Environment\Scripts\Doodad.cs" />
     <Compile Include="Assets\Environment\Scripts\EnvironmentSettings.cs" />
     <Compile Include="Assets\Environment\test.cs" />
+    <Compile Include="Assets\Scripts\Msc\Layers.cs" />
     <Compile Include="Assets\Scripts\Msc\SceneLoader.cs" />
     <Compile Include="Assets\Scripts\MultiplayerZoomCamera.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
