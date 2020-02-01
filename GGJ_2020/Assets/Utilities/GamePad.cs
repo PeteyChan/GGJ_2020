@@ -8,7 +8,7 @@ public class GamePad
 {
     public GamePad(int player)
     {
-        this.player = Mathf.Max(1, player);
+        this.player = Mathf.Max(0, player);
     }
 
     public int player
@@ -19,9 +19,9 @@ public class GamePad
         get
         {
             var all = Gamepad.all;
-            if (all.Count < player || player < 1)
+            if (all.Count == 0 || player >= all.Count)
                 return null;
-            return all[player - 1];
+            return all[player];
         }
     }
 

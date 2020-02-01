@@ -65,12 +65,15 @@
     <Compile Include="Assets\Environment\Scripts\Doodad.cs" />
     <Compile Include="Assets\Environment\Scripts\EnvironmentSettings.cs" />
     <Compile Include="Assets\Environment\test.cs" />
+    <Compile Include="Assets\PlayerSelector.cs" />
+    <Compile Include="Assets\Scripts\Msc\GameSettings.cs" />
     <Compile Include="Assets\Scripts\Msc\Layers.cs" />
     <Compile Include="Assets\Scripts\Msc\SceneLoader.cs" />
     <Compile Include="Assets\Scripts\MultiplayerZoomCamera.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
+    <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\States\CarryIdleState.cs" />
-    <Compile Include="Assets\Scripts\States\CarryMoveState.cs" />
+    <Compile Include="Assets\Scripts\States\CarryWalkState.cs" />
     <Compile Include="Assets\Scripts\States\DashState.cs" />
     <Compile Include="Assets\Scripts\States\DeathState.cs" />
     <Compile Include="Assets\Scripts\States\DropState.cs" />
