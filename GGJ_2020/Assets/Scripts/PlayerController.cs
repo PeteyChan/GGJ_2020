@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
 
     public bool TryAddHeldPartToShip()
     {
-        if (_player.NearbyShip != null && _player.HeldPart != null)//&& ship.Team == GameSettings.GetPlayerInfo(_player.PlayerNumber).Team)
+        if (_player.NearbyShip != null && _player.HeldPart != null && _player.NearbyShip.Team == GameSettings.GetPlayerInfo(_player.GamePad.player).Team)
         {
             _player.NearbyShip.AddPart(_player.HeldPart);
             _player.HeldPart = null;
