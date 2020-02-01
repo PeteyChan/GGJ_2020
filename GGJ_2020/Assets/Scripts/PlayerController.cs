@@ -3,19 +3,52 @@
 [RequireComponent(typeof(Player))]
 public class PlayerController : MonoBehaviour
 {
-    private GamePad _pad;
+    private Player _player;
     private Rigidbody _rb;
 
     [SerializeField] private float _playerSpeed;
 
+    private bool _canMove = true;
+
     private void Awake()
     {
-        _pad = GetComponent<Player>().GamePad;
-        _rb = GetComponent<Rigidbody>();
+        _player = GetComponent<Player>();
+        _rb = _player.GetComponent<Rigidbody>();
     }
 
     private void Update()
     {
-        _rb.velocity = new Vector3(_pad.LeftStick.x, 0, _pad.LeftStick.y) * _playerSpeed;
+        if (!_canMove) 
+        {
+            _rb.velocity = Vector3.zero;
+            return;
+        }
+
+        _rb.velocity = new Vector3(_player.GamePad.LeftStick.x, 0, _player.GamePad.LeftStick.y) * _playerSpeed;
+    }
+
+    public void AllowMovement(bool state)
+    {
+        _canMove = state;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        ShipPart part = collision.gameObject.GetComponent<ShipPart>();
+
+        if (part != null && _player.NearbyPart != part)
+        {
+            _player.NearbyPart = part;
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        ShipPart part = collision.gameObject.GetComponent<ShipPart>();
+
+        if (part != null && _player.NearbyPart == part)
+        {
+            _player.NearbyPart = null;
+        }
     }
 }

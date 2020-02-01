@@ -4,21 +4,23 @@
 [RequireComponent(typeof(DashState))]
 public class WalkState : State
 {
-    private Player _player;
+    private ItemCarryController _controller;
+    private Rigidbody _rb;
 
     private void Awake()
     {
-        _player = gameObject.Find<Player>();
+        _controller = gameObject.Find<ItemCarryController>();
+        _rb = gameObject.Find<Rigidbody>();
     }
-    
+
     protected override IState OnUpdate(float deltaTime, float stateTime)
     {
-        if (_player.GamePad.GetButton(GamePad.Buttons.face_left).wasPressed)
+        if (_controller.TryPickupPart())
         {
             return gameObject.Find<PickupState>();
         }
 
-        if (_player.Rigidbody.velocity.magnitude < 0.1f)
+        if (_rb.velocity.magnitude < 0.1f)
         {
             return gameObject.Find<IdleState>();
         }

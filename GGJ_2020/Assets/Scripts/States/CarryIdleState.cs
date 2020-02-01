@@ -6,10 +6,12 @@
 public class CarryIdleState : State
 {
     private Player _player;
+    private Rigidbody _rb;
 
     private void Awake()
     {
         _player = gameObject.Find<Player>();
+        _rb = _player.GetComponent<Rigidbody>();
     }
 
     protected override IState OnUpdate(float deltaTime, float stateTime)
@@ -19,7 +21,7 @@ public class CarryIdleState : State
             return GetComponent<DropState>();
         }
         
-        if (_player.Rigidbody.velocity.magnitude > 0.1f)
+        if (_rb.velocity.magnitude > 0.1f)
         {
             return GetComponent<CarryWalkState>();
         }

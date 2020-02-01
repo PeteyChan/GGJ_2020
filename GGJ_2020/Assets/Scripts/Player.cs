@@ -4,14 +4,12 @@
 [RequireComponent(typeof(BoxCollider))]
 [RequireComponent(typeof(StateMachine))]
 [RequireComponent(typeof(PlayerController))]
+[RequireComponent(typeof(ItemCarryController))]
 public class Player : MonoBehaviour
 {
     public GamePad GamePad => new GamePad(1);
 
-    public Rigidbody Rigidbody { get; private set; }
+    public ShipPart HeldPart { get; set; }
 
-    private void Awake()
-    {
-        Rigidbody = GetComponent<Rigidbody>();
-    }
+    public ShipPart NearbyPart { get; set; }
 }
