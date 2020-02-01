@@ -11,6 +11,9 @@ public static class GameSettings
             Players.Add(new PlayerInfo());
     }
 
+    public static int2 MapSize;
+    public static Team WinningTeam = Team.Red ;
+
     static List<PlayerInfo> Players;
     public static PlayerInfo GetPlayerInfo(int player) =>(player >= 0 && player <= 3) ? Players[player] : new PlayerInfo();
     public enum Team

@@ -19,8 +19,8 @@ MonoBehaviour:
     sceneAsset: {fileID: 102900000, guid: c83821d1a05bbe948a84c7a3dfbb77ee, type: 3}
     sceneName: TeamSelect
   Game:
-    sceneAsset: {fileID: 102900000, guid: 29419fec502cda84db0c52e836ebd635, type: 3}
-    sceneName: GameUI
+    sceneAsset: {fileID: 102900000, guid: d1c3109bdb54ad54c8a2b2838528e640, type: 3}
+    sceneName: SampleScene
   End:
-    sceneAsset: {fileID: 0}
-    sceneName: 
+    sceneAsset: {fileID: 102900000, guid: 69c675a6b9571f54db41bea9e2d26bfe, type: 3}
+    sceneName: GameOverMenu

@@ -48,7 +48,7 @@ namespace Inspectors
         {
             if (drawer == null)
             {
-                drawer = new Inspectors.Intenal.CustomUnityInspector.DrawDefaultClass();
+                drawer = new Inspectors.Intenal.DrawDefaultClass();
                 drawer.SetUp(serializedObject);
             }
             drawer.Draw();
@@ -92,9 +92,6 @@ namespace Inspectors
 
     namespace Intenal
     {
-        [CustomEditor(typeof(UnityEngine.Object), true)]
-        class CustomUnityInspector : Editor
-        {
             static class Drawers
             {
                 static Drawers()
@@ -168,6 +165,11 @@ namespace Inspectors
                 }
             }
 
+#if true//false
+        [CustomEditor(typeof(UnityEngine.Object), true)]
+        class CustomUnityInspector : Editor
+        {
+
             public bool alwaysRepaint;
             bool useDefault;
 
@@ -213,54 +215,57 @@ namespace Inspectors
                 }
             }
 
-            class DrawDefaultField : DrawField<object>
+        }
+
+#endif
+        class DrawDefaultField : DrawField<object>
             {
                 public override void Draw()
                 {
                     EditorGUILayout.PropertyField(serializedObject.FindProperty(fieldInfo.Name));
                 }
             }
-            
-            public class DrawDefaultClass : DrawClass<UnityEngine.Object>
+        public class DrawDefaultClass : DrawClass<UnityEngine.Object>
+    {
+        public override void Init()
+        {
+            foreach (var member in serializedObject.targetObject.GetType().GetMembers(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
             {
-                public override void Init()
+                if (!member.GetCustomAttribute<Attributes.Visible>())
+                    continue;
+                if (member.GetCustomAttribute<HideInInspector>() != null)
+                    continue;
+
+                foreach (var attribute in member.GetCustomAttributes())
                 {
-                    foreach (var member in serializedObject.targetObject.GetType().GetMembers(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
+                    if (Drawers.TryGetAttributeDrawer(attribute.GetType(), out var drawer))
                     {
-                        if (!member.GetCustomAttribute<Attributes.Visible>())
-                            continue;
-                        if (member.GetCustomAttribute<HideInInspector>() != null)
-                            continue;
-
-                        foreach (var attribute in member.GetCustomAttributes())
-                        {
-                            if (Drawers.TryGetAttributeDrawer(attribute.GetType(), out var drawer))
-                            {
-                                drawer.SetUp(attribute, member, serializedObject);
-                                drawers.Add(drawer);
-                            }
-                        }
-
-                        if (member is FieldInfo field && serializedObject.FindProperty(field.Name) != null)
-                        {
-                            if (Drawers.TryGetFieldDrawer(field.FieldType, out var drawer))
-                            {
-                                drawer.SetUp(serializedObject, member);
-                                drawers.Add(drawer);
-                            }
-                        }
+                        drawer.SetUp(attribute, member, serializedObject);
+                        drawers.Add(drawer);
                     }
                 }
 
-                List<IDrawer> drawers = new List<IDrawer>();
-
-                public override void Draw()
+                if (member is FieldInfo field && serializedObject.FindProperty(field.Name) != null)
                 {
-                    foreach (var drawer in drawers)
-                        drawer.Draw();
+                    if (Drawers.TryGetFieldDrawer(field.FieldType, out var drawer))
+                    {
+                        drawer.SetUp(serializedObject, member);
+                        drawers.Add(drawer);
+                    }
                 }
             }
         }
+
+        List<IDrawer> drawers = new List<IDrawer>();
+
+        public override void Draw()
+        {
+            foreach (var drawer in drawers)
+                drawer.Draw();
+        }
     }
+    }
+
+
 }
 #endif

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9bb59f9ab5054d4b9276bebd6d3c3fd, type: 3}
+  m_Name: ShipParts
+  m_EditorClassIdentifier: 
+  LandingGear: {fileID: 1635514336902843464, guid: 97055275848198e4c83bed2a902fc6eb,
+    type: 3}
+  OtherParts:
+  - {fileID: 4602776228929891955, guid: 1ec5838c0d37db644b54b9c32813d6cf, type: 3}
+  - {fileID: 7501051094414652049, guid: 52e7adbeb4eb41441a596815e45e2575, type: 3}
+  - {fileID: 7369456180302869699, guid: bed708c8b94dc184280cb2dc21a57441, type: 3}
+  - {fileID: 423327702899562787, guid: 9b339550d0a1e294e823430ed31e6004, type: 3}
+  - {fileID: 2045366424454199614, guid: 8e3149f12aea7c4489c28394ac80634a, type: 3}
+  - {fileID: 6938613798545689975, guid: b278b5b2bf429f1499f6f6def7177a3a, type: 3}

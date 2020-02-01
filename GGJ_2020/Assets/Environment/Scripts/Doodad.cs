@@ -26,16 +26,20 @@ public class Doodad : MonoBehaviour
 
     int2 pos => new int2(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.z));
 
-    private void OnEnable()
+    private void Start()
     {
         if (lookup.TryGetValue(pos, out var go))
         {
             Destroy(go);
         }
         lookup[pos] = gameObject;
+        if (pos.x > GameSettings.MapSize.x)
+            GameSettings.MapSize = new int2(pos.x, GameSettings.MapSize.y);
+        if (pos.y > GameSettings.MapSize.y)
+            GameSettings.MapSize = new int2(GameSettings.MapSize.x, pos.y);
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         lookup[pos] = null;
     }
