@@ -1365,7 +1365,10 @@ MonoBehaviour:
   m_Text: 'LEFT STICK: MOVE
 
 
-    X: PICK UP/THROW'
+    X: PICK UP/THROW
+
+
+    A: DASH'
 --- !u!222 &1915884479
 CanvasRenderer:
   m_ObjectHideFlags: 0
