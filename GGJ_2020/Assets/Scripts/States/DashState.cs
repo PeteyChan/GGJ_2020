@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 
+[RequireComponent(typeof(IdleState))]
+[RequireComponent(typeof(WalkState))]
 public class DashState : State
 {
     [SerializeField] private float _dashLengthInSeconds;

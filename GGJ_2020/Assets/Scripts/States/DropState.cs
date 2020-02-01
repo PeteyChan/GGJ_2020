@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+[RequireComponent(typeof(CarryIdleState))]
+[RequireComponent(typeof(CarryWalkState))]
+[RequireComponent(typeof(PickupState))]
 public class DropState : State
 {
     [SerializeField] private float _timeToDropItem;
@@ -8,7 +11,7 @@ public class DropState : State
     {
         if (stateTime > _timeToDropItem)
         {
-            return GetComponent<IdleState>();
+            return gameObject.Find<IdleState>();
         }
 
         return this;

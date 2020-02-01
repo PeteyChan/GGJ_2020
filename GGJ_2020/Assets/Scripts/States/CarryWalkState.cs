@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(CarryWalkState))]
+[RequireComponent(typeof(CarryIdleState))]
 [RequireComponent(typeof(PickupState))]
 [RequireComponent(typeof(DropState))]
-public class CarryIdleState : State
+public class CarryWalkState : State
 {
     private Player _player;
 
@@ -18,10 +18,10 @@ public class CarryIdleState : State
         {
             return GetComponent<DropState>();
         }
-        
-        if (_player.Rigidbody.velocity.magnitude > 0.1f)
+
+        if (_player.Rigidbody.velocity.magnitude < 0.1f)
         {
-            return GetComponent<CarryWalkState>();
+            return GetComponent<CarryIdleState>();
         }
 
         return this;
