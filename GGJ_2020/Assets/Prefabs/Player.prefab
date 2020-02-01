@@ -73,7 +73,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DefaultSubState: {fileID: 0}
-  _timeToPickupItem: 0
+  _timeToPickupItem: 2
 --- !u!114 &4931408575537792332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -87,7 +87,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DefaultSubState: {fileID: 0}
-  _timeToDropItem: 0
+  _timeToDropItem: 2
 --- !u!1 &6510632727022766030
 GameObject:
   m_ObjectHideFlags: 0
@@ -222,6 +222,7 @@ GameObject:
   - component: {fileID: 1001993064985575772}
   - component: {fileID: 4629364735709756254}
   - component: {fileID: 9114801320024614468}
+  - component: {fileID: 5453564456514792570}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -360,3 +361,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerSpeed: 3.5
+--- !u!114 &5453564456514792570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8527187361652969068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a25e8920c898634e88d5938f8fc61d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
