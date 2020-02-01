@@ -4,15 +4,12 @@ using UnityEngine;
 
 public class ExitApplication : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public void Quit()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
 }

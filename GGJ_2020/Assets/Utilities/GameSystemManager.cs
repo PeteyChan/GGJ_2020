@@ -92,7 +92,7 @@ public class GameManager : MonoBehaviour
 #if UNITY_EDITOR
     class GameManagerWindow : UnityEditor.EditorWindow
     {
-        [UnityEditor.MenuItem("Managers/GameManager")]
+        [UnityEditor.MenuItem("Game/GameManager")]
         static void ShowWindow()
         {
             var window = UnityEditor.EditorWindow.GetWindow<GameManagerWindow>();

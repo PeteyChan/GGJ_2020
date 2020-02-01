@@ -7,7 +7,6 @@ public class EnvironmentSettings : ScriptableObject
 {
     public List<TerrainItem> Fields = new List<TerrainItem>();
     public List<DoodadItem> Doodads = new List<DoodadItem>();
-    public List<GameObject> Bounds = new List<GameObject>();
 
     public int SizeX;
     public int SizeY;
@@ -32,9 +31,6 @@ public class EnvironmentSettings : ScriptableObject
         public bool Walkable;
     }
 
-    List<GameObject> terrain = new List<GameObject>();
-    List<GameObject> doodads = new List<GameObject>();
-
     // Map //
 
     public void GererateMap()
@@ -53,8 +49,8 @@ public class EnvironmentSettings : ScriptableObject
 
     public void GenerateTerrain()
     {
-        GenerateBounds();
         ClearTerrain();
+        GenerateBounds();
         Random.InitState(TerrainSeed);
         int totalWeight = 0;
         foreach (var item in Fields)
@@ -72,11 +68,9 @@ public class EnvironmentSettings : ScriptableObject
                     if (item.TerrainType)
                     {
                         var go = Instantiate(item.TerrainType, new Vector3(x, 0, y), Quaternion.identity);
-                        terrain.Add(go);
-                        if (mirror)
+                        if (mirror && x != 0)
                         {
                             go = Instantiate(go, new Vector3(-x, 0, y), Quaternion.identity);
-                            terrain.Add(go);
                         }
                     }
                     break;
@@ -100,8 +94,9 @@ public class EnvironmentSettings : ScriptableObject
 
     public void ClearTerrain()
     {
-        foreach (var obj in terrain)
+        foreach (GameObject obj in UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects())
         {
+            if (obj.layer != Layers.Terrain) continue;
             if (Application.isPlaying)
                 Destroy(obj);
             else DestroyImmediate(obj);
@@ -139,12 +134,10 @@ public class EnvironmentSettings : ScriptableObject
                             collider.transform.localPosition = Vector3.zero;
                             go.layer = Layers.Doodads;
                         }
-                        doodads.Add(go);
                         if (mirror && x != 0)
                         {
-                            doodads.Add(Instantiate(go, new Vector3(-x, 0, y), Quaternion.identity));
+                            Instantiate(go, new Vector3(-x, 0, y), Quaternion.identity);
                         }
-                        doodads.Add(go);
                     }
                     break;
                 }
@@ -172,8 +165,9 @@ public class EnvironmentSettings : ScriptableObject
     
     public void ClearDoodads()
     {
-        foreach (var obj in doodads)
+        foreach (var obj in UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects())
         {
+            if (obj.layer != Layers.Doodads) continue;
             if (Application.isPlaying)
                 Destroy(obj);
             else DestroyImmediate(obj);
@@ -184,34 +178,19 @@ public class EnvironmentSettings : ScriptableObject
 
     void GenerateBounds()
     {
-        ClearBounds();
-
         //right bounds
         var barrier = new GameObject().AddComponent<BoxCollider>();
+        barrier.gameObject.layer = Layers.Terrain;
         barrier.name = "Bounds";
         barrier.transform.position = new Vector3(SizeX, 0, SizeY/2);
         barrier.size = new Vector3(1, 5, SizeY + 2);
-        Bounds.Add(barrier.gameObject);
         //left bounds;
         barrier = Instantiate(barrier, new Vector3(-SizeX, 0, SizeY/2), Quaternion.identity);
-        Bounds.Add(barrier.gameObject);
         //top bounds;
         barrier = Instantiate(barrier, new Vector3(0, 0, SizeY), Quaternion.identity);
         barrier.size = new Vector3((SizeX * 2) + 2, 5, 1);
-        Bounds.Add(barrier.gameObject);
         //bot bounds
         barrier = Instantiate(barrier, new Vector3(0, 0, -1), Quaternion.identity);
-        Bounds.Add(barrier.gameObject);
-    }
-
-    void ClearBounds()
-    {
-        foreach (var obj in Bounds)
-        {
-            if (Application.isPlaying)
-                Destroy(obj);
-            else DestroyImmediate(obj);
-        }
     }
 }
 
@@ -407,6 +386,24 @@ namespace Inspectors
             }
 
             EditorUtility.SetDirty(target);
+        }
+    }
+
+    class EnvironmentBUilder : EditorWindow
+    {
+        [MenuItem("Game/Environment Builder")]
+        static void OpenWindow()
+        {
+            var window = EditorWindow.CreateWindow<EnvironmentBUilder>();
+        }
+
+        Editor Editor;
+
+        private void OnGUI()
+        {
+            if (Editor)
+                Editor.OnInspectorGUI();
+            else Editor = Editor.CreateEditor(Resources.Load("EnvironmentBuilder"));
         }
     }
 }
