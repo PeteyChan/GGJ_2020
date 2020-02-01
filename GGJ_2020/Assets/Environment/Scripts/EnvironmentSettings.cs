@@ -391,6 +391,8 @@ namespace Inspectors
 
     class EnvironmentBUilder : EditorWindow
     {
+        IDrawer drawer;
+
         [MenuItem("Game/Environment Builder")]
         static void OpenWindow()
         {
@@ -401,9 +403,13 @@ namespace Inspectors
 
         private void OnGUI()
         {
-            if (Editor)
-                Editor.OnInspectorGUI();
-            else Editor = Editor.CreateEditor(Resources.Load("EnvironmentBuilder"));
+            if (drawer == null)
+            {
+                var so = new UnityEditor.SerializedObject(Resources.Load("EnvironmentBuilder"));
+                drawer = new EnvironmentSettingsDrawer();
+                drawer.SetUp(so);
+            }
+            else drawer.Draw();
         }
     }
 }

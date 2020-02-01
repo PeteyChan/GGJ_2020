@@ -1,24 +1,24 @@
 ﻿using UnityEngine;
 
+[RequireComponent(typeof(IdleState))]
+[RequireComponent(typeof(DashState))]
 public class WalkState : State
 {
-    private Rigidbody2D _rb;
-    private GamePad _pad;
+    private Player _player;
 
     private void Awake()
     {
-        _rb = GetComponent<Rigidbody2D>();
-        _pad = gameObject.Find<Player>().GamePad;
+        _player = gameObject.Find<Player>();
     }
     
     protected override IState OnUpdate(float deltaTime, float stateTime)
     {
-        if (_pad.GetButton(GamePad.Buttons.face_left).wasPressed)
+        if (_player.GamePad.GetButton(GamePad.Buttons.face_left).wasPressed)
         {
-            return GetComponent<PickupState>();
+            return gameObject.Find<PickupState>();
         }
 
-        if (_rb.velocity.magnitude < 0.1f)
+        if (_player.Rigidbody.velocity.magnitude < 0.1f)
         {
             return gameObject.Find<IdleState>();
         }

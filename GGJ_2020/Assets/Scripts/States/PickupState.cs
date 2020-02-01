@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+[RequireComponent(typeof(CarryIdleState))]
+[RequireComponent(typeof(CarryWalkState))]
+[RequireComponent(typeof(DropState))]
 public class PickupState : State
 {
     [SerializeField] private float _timeToPickupItem;
