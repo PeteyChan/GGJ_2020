@@ -9,6 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7501051094414652050}
+  - component: {fileID: 7501051093935817646}
+  - component: {fileID: 8184132845035558201}
   m_Layer: 0
   m_Name: Cockpit
   m_TagString: Untagged
@@ -31,6 +33,33 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7501051093935817646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7501051094414652049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 933561b6bf381d648ac65fcdd0bfdac9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  snapPosition: {x: 0, y: 0.819, z: 1.545}
+  partID: 1
+--- !u!65 &8184132845035558201
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7501051094414652049}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1.44}
+  m_Center: {x: -0.04, y: 0.5, z: 0}
 --- !u!1001 &7501051093253897331
 PrefabInstance:
   m_ObjectHideFlags: 0

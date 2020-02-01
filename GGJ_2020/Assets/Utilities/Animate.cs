@@ -12,7 +12,7 @@ public class Animate : MonoBehaviour
 
     PlayableGraph graph;
     AnimationMixerPlayable mixer;
-    Dictionary<int, AnimationClipPlayable> playableLookup = new Dictionary<int, AnimationClipPlayable>();
+    Dictionary<AnimationClip, AnimationClipPlayable> playableLookup = new Dictionary<AnimationClip, AnimationClipPlayable>();
     
     
     [Attributes.Label]
@@ -109,10 +109,10 @@ public class Animate : MonoBehaviour
     public void Remove(AnimationClip clip)
     {
         if (!clip) return;
-        if (playableLookup.TryGetValue(clip.GetInstanceID(), out var playable))
+        if (playableLookup.TryGetValue(clip, out var playable))
         {
             graph.DestroyPlayable(playable);
-            playableLookup.Remove(clip.GetInstanceID());
+            playableLookup.Remove(clip);
         }
     }
     
@@ -129,14 +129,14 @@ public class Animate : MonoBehaviour
             Debug.LogError("Cannot Play Null Clip", gameObject);
             return;
         }
-        if (!playableLookup.TryGetValue(clip.GetInstanceID(), out var next))
+        if (!playableLookup.TryGetValue(clip, out var next))
         {
             if (!graph.IsValid())
             {
                 CreateGraph();
             }
             
-            playableLookup[clip.GetInstanceID()] = next = AnimationClipPlayable.Create(graph, clip);
+            playableLookup[clip] = next = AnimationClipPlayable.Create(graph, clip);
         }
 
         var current = mixer.GetInput(0);
@@ -151,7 +151,7 @@ public class Animate : MonoBehaviour
             mixer.SetInputWeight(0, 1);
         else
         {
-            if (current.IsValid())
+            if (current.IsValid() && ((AnimationClipPlayable)current).GetAnimationClip() != ((AnimationClipPlayable)next).GetAnimationClip())
                 mixer.ConnectInput(1, current, 0);
             mixer.SetInputWeight(0, 0);
             mixer.SetInputWeight(1, 1);

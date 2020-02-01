@@ -35,11 +35,11 @@ MonoBehaviour:
     Doodad: {fileID: 7445517992994692739, guid: 70943b4ce8fa2174b868989750775cf2,
       type: 3}
     Walkable: 1
-  - Weighting: 5
+  - Weighting: 7
     Doodad: {fileID: 0}
     Walkable: 0
-  SizeX: 10
-  SizeY: 10
+  SizeX: 40
+  SizeY: 30
   TerrainSeed: 729127848
   DoodadSeed: 884734018
   MirrorTerrain: 1

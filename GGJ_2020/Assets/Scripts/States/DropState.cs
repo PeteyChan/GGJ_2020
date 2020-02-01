@@ -14,6 +14,7 @@ public class DropState : State
         _controller = gameObject.Find<ItemCarryController>();
     }
 
+    /*
     protected override void OnEnter()
     {
         _controller.BeginDropPart();
@@ -33,4 +34,5 @@ public class DropState : State
     {
         _controller.EndDropPart();
     }
+    */
 }

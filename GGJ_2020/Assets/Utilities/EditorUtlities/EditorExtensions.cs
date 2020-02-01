@@ -227,6 +227,8 @@ namespace Inspectors
             }
         public class DrawDefaultClass : DrawClass<UnityEngine.Object>
     {
+
+            Editor Editor;
         public override void Init()
         {
             foreach (var member in serializedObject.targetObject.GetType().GetMembers(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
@@ -245,6 +247,7 @@ namespace Inspectors
                     }
                 }
 
+                
                 if (member is FieldInfo field && serializedObject.FindProperty(field.Name) != null)
                 {
                     if (Drawers.TryGetFieldDrawer(field.FieldType, out var drawer))
@@ -253,6 +256,7 @@ namespace Inspectors
                         drawers.Add(drawer);
                     }
                 }
+
             }
         }
 

@@ -129,7 +129,7 @@ public class EnvironmentSettings : ScriptableObject
                         {
                             var collider = new GameObject();
                             collider.AddComponent<Obstacle>();
-                            collider.AddComponent<BoxCollider>();
+                            collider.AddComponent<CapsuleCollider>().height = 2f;
                             collider.transform.parent = go.transform;
                             collider.transform.localPosition = Vector3.zero;
                             go.layer = Layers.Doodads;

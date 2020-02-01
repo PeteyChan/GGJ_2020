@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TeamSelect.unity
     guid: c83821d1a05bbe948a84c7a3dfbb77ee
+  - enabled: 1
+    path: Assets/Scenes/Test.unity
+    guid: 55ca66b6ad75bd443bf0826cf88ba8d1
   m_configObjects: {}

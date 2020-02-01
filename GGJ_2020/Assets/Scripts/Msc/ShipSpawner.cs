@@ -30,10 +30,46 @@ public class ShipSpawner : MonoBehaviour
         foreach (var (playerID, info) in GameSettings.GetPlayers(Team))
         {
             var go = Instantiate(Resources.Load<GameObject>("Player"));
-            go.Find<Player>().GamePad = new GamePad(playerID);
+            go.TryFind(out Player player);
+            player.GamePad = new GamePad(playerID);
+            player.Team = Team;
             go.transform.position = new Vector3(pos.x > 0 ? pos.x - 1 : pos.x +1 , 1, pos.y + playerID);
         }
 
-        Instantiate(ShipPartPrefabs.Instance.LandingGear, transform.position, Quaternion.identity).AddComponent<ShipAssembler>().Team = Team;
+        Instantiate(ShipPartPrefabs.Instance.LandingGear, transform.position, Quaternion.identity).Find<ShipAssembler>().Team = Team;
+        new GameObject("Part Spawner").AddComponent<PartSpawner>().SpawnerPosition = transform.position;
+    }
+
+    class PartSpawner : MonoBehaviour
+    {
+        public Vector3 SpawnerPosition;
+
+        float elapsed;
+        float target;
+        private void Update()
+        {
+            elapsed += Time.deltaTime;
+            if (elapsed > target)
+            {
+
+                int2 spawn = new int2(Mathf.Abs(Mathf.RoundToInt(SpawnerPosition.x)), Mathf.Abs(Mathf.RoundToInt(SpawnerPosition.z)));
+                var mapsize = GameSettings.MapSize;
+
+                int2 targetPos = new int2(Random.Range(-mapsize.x, mapsize.x), Random.Range(0, mapsize.y));
+
+                if (Mathf.Abs(spawn.x - Mathf.Abs(targetPos.x)) < 5)
+                    return;
+                if (Mathf.Abs(spawn.y - Mathf.Abs(targetPos.y)) < 5)
+                    return;
+                if (Doodad.GetDoodadAtLocation(targetPos)?.Find<Obstacle>())
+                    return;
+                var parts = ShipPartPrefabs.Instance.OtherParts;
+                Instantiate(parts[Random.Range(0, parts.Count)], new Vector3(targetPos.x, 10, targetPos.y), Quaternion.identity);
+
+                elapsed = 0;
+                target = Random.Range(2f, 7f);
+            }
+        }
     }
 }
+

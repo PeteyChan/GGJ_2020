@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
         _canMove = state;
     }
 
+        /*
     public bool TryAddHeldPartToShip()
     {
         if (_player.NearbyShip != null && _player.HeldPart != null && _player.NearbyShip.Team == GameSettings.GetPlayerInfo(_player.GamePad.player).Team)
@@ -40,52 +41,15 @@ public class PlayerController : MonoBehaviour
             _player.HeldPart = null;
             return true;
         }
-
         return false;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        ShipPart part = collision.gameObject.GetComponent<ShipPart>();
-
-        if (part != null && _player.NearbyPart != part)
+        if (other.gameObject.TryFind(out ShipPart part))
         {
             _player.NearbyPart = part;
-            return;
-        }
-
-        BrokenShip ship = collision.gameObject.GetComponent<BrokenShip>();
-
-        if (ship != null && _player.NearbyShip != ship)
-        {
-            _player.NearbyShip = ship;
         }
     }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        ShipPart part = collision.gameObject.GetComponent<ShipPart>();
-
-        if (part != null)
-        {
-            if (_player.NearbyPart == part)
-            {
-                _player.NearbyPart = null;
-            }
-
-            return;
-        }
-
-        BrokenShip ship = collision.gameObject.GetComponent<BrokenShip>();
-
-        if (ship != null)
-        {
-            if (_player.NearbyShip == ship)
-            {
-                _player.NearbyShip = null;
-            }
-
-            return;
-        }
-    }
+        */
 }

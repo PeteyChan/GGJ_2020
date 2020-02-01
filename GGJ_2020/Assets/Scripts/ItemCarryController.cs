@@ -13,6 +13,7 @@ public class ItemCarryController : MonoBehaviour
         _player = GetComponent<Player>();
         _controller = GetComponent<PlayerController>();
     }
+    /*
 
     public bool TryPickupPart()
     {
@@ -31,7 +32,6 @@ public class ItemCarryController : MonoBehaviour
         _player.HeldPart = _player.NearbyPart;
         _controller.AllowMovement(true);
     }
-
     public bool TryDropPart()
     {
         return _player.HeldPart != null && _player.GamePad.GetButton(PICKUP_BUTTON).wasPressed;
@@ -49,4 +49,5 @@ public class ItemCarryController : MonoBehaviour
         _player.HeldPart = null;
         _controller.AllowMovement(true);
     }
+    */
 }
