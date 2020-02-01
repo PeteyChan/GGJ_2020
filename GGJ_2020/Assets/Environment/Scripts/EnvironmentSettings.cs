@@ -367,8 +367,9 @@ namespace Inspectors
                 using (new GUILayout.HorizontalScope())
                 {
                     GUILayout.Label("Doodad Type", EditorStyles.boldLabel, GUILayout.Width(Screen.width / 2f));
-                    GUILayout.Label("Weighting", EditorStyles.boldLabel, GUILayout.Width(size / 2f));
-                    GUILayout.Label("Walkable", EditorStyles.boldLabel, GUILayout.Width(size / 2f));
+                    GUILayout.Label("Weighting", EditorStyles.boldLabel);
+                    GUILayout.Label("Walkable", EditorStyles.boldLabel);
+                    GUILayout.Label("", GUILayout.Width(48));
                 }
 
                 if (target.Doodads.Count == 0)
@@ -387,8 +388,8 @@ namespace Inspectors
                         }
 
 
-                        target.Doodads[i].Weighting = EditorGUILayout.IntField(target.Doodads[i].Weighting, GUILayout.Width(size / 2f));
-                        target.Doodads[i].Walkable = EditorGUILayout.Toggle(target.Doodads[i].Walkable, GUILayout.Width(size / 2f));
+                        target.Doodads[i].Weighting = EditorGUILayout.IntField(target.Doodads[i].Weighting);
+                        target.Doodads[i].Walkable = EditorGUILayout.Toggle(target.Doodads[i].Walkable);
                         if (target.Doodads[i].Weighting < 1)
                             target.Doodads[i].Weighting = 1;
                         if (GUILayout.Button("+", GUILayout.Width(24)))
