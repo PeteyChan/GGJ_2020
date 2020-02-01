@@ -85,4 +85,17 @@ public class Player : MonoBehaviour
                 return part;
         return null;
     }
+
+    public Player PlayerCollision;
+    public Doodad DoodadCollision;
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.TryFind(out Doodad doodad))
+            DoodadCollision = doodad;
+        if (other.gameObject.TryFind(out Player player))
+        {
+            PlayerCollision = player;
+        }
+    }
 }

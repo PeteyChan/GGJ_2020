@@ -68,6 +68,7 @@
     <Compile Include="Assets\Environment\Scripts\EnvironmentSettings.cs" />
     <Compile Include="Assets\Environment\test.cs" />
     <Compile Include="Assets\FaceMoveDirection.cs" />
+    <Compile Include="Assets\KnockedDownState.cs" />
     <Compile Include="Assets\Scripts\BrokenShip.cs" />
     <Compile Include="Assets\Scripts\ItemCarryController.cs" />
     <Compile Include="Assets\Scripts\Msc\GameSettings.cs" />

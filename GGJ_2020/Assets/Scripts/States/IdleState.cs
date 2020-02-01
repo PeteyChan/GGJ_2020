@@ -16,15 +16,18 @@ public class IdleState : State
         _rb = gameObject.Find<Rigidbody>();
     }
 
+    Vector3 enterVel;
+
     protected override void OnEnter()
     {
         gameObject.Find<Animate>().Play(clip);
+        enterVel = _rb.velocity;
     }
 
 
     protected override IState OnUpdate(float deltaTime, float stateTime)
     {
-        _rb.velocity = Vector3.Lerp(_rb.velocity, Vector3.zero, stateTime * 2f);
+        _rb.velocity = Vector3.Lerp(enterVel, Vector3.zero, stateTime * 2f);
 
         if (player.GamePad.GetButton(GamePad.Buttons.face_left).wasPressed && player.GetPart())
             return gameObject.Find<PickupState>();

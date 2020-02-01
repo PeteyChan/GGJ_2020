@@ -6,7 +6,15 @@ public class ShipPart : MonoBehaviour
     public GameSettings.Team team;
     public int partID;
 
-    public Player Holder;
+    Player holder;
+    public Player Holder
+    {
+        get => holder;
+        set {
+            holder = value;
+            currentState = state.pickedup;
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -24,33 +32,63 @@ public class ShipPart : MonoBehaviour
         }
     }
 
-    float fallTime;
     float elapsed;
+
+    public enum state
+    {
+        falling,
+        pickedup,
+        grounded,
+        despawn
+    }
+
+    public state currentState = state.falling;
 
     private void Update()
     {
-        if (Holder)
+        switch (currentState)
         {
-            transform.position = Holder.transform.position + Vector3.up;
-            transform.rotation = Holder.GetComponentInChildren<Animator>().transform.rotation;
-            return;
+            case state.pickedup:
+                if (Holder == null)
+                {
+                    currentState = state.falling;
+                    break;
+                }
+                transform.position = Holder.transform.position + Vector3.up;
+                transform.rotation = Holder.GetComponentInChildren<Animator>().transform.rotation;
+                return;
+
+            case state.falling:
+                {
+                    var pos = transform.position;
+                    pos.y -= Time.deltaTime * 7f;
+                    transform.position = pos;
+                    if (pos.y < 0)
+                    {
+                        pos.y = 0;
+                        currentState = state.grounded;
+                    }
+                }
+                return;
+
+            case state.grounded:
+                elapsed += Time.deltaTime;
+                if (elapsed > 20)
+                {
+                    currentState = state.despawn;
+                }
+                return;
+
+            case state.despawn:
+                {
+                    var pos = transform.position;
+                    pos.y -= Time.deltaTime * 2f;
+                    if (pos.y < -5)
+                        Destroy(transform.root.gameObject);
+                    transform.position = pos;
+                }
+                return;
         }
-
-        elapsed += Time.deltaTime;
-
-        if (transform.position.y > 0)
-        {
-            transform.position = new Vector3(transform.position.x, transform.position.y - (10 * fallTime * fallTime), transform.position.z);
-            fallTime += Time.deltaTime;
-        }
-
-        if (elapsed >= 30)
-        {
-            transform.position += Vector3.down * 10f * Time.deltaTime;
-        }
-
-        if (transform.position.y < -5)
-            Destroy(transform.root.gameObject);
     }
 
     private void OnDestroy()

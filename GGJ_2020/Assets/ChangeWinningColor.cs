@@ -10,21 +10,3 @@ public class ChangeWinningColor : MonoBehaviour
         GetComponent<UnityEngine.UI.Image>().color = GameSettings.WinningTeam == GameSettings.Team.Red ? Color.red : Color.blue;   
     }
 }
-
-class ToEndSystem : GameSystem, Events.IOnConsoleInput
-{
-    public void OnConsoleInput(string[] consoleInput)
-    {
-        var message = consoleInput[0];
-        if (message == "redwin")
-        {
-            GameSettings.WinningTeam = GameSettings.Team.Red;
-            SceneLoader.ToEnd();
-        }
-        if (message == "bluewin")
-        {
-            GameSettings.WinningTeam = GameSettings.Team.Blue;
-            SceneLoader.ToEnd();
-        }
-    }
-}

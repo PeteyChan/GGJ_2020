@@ -11,6 +11,7 @@ public class ShipSpawner : MonoBehaviour
     // Start is called before the first frame update
     IEnumerator Start()
     {
+        spawners.Add(this);
         yield return null;
         yield return null;
         transform.position = new Vector3(GameSettings.MapSize.x / 2, 0, GameSettings.MapSize.y / 2);

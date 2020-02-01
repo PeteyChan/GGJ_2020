@@ -132,7 +132,7 @@ public abstract class State : MonoBehaviour, IState
     IState IState.OnUpdate(float deltaTime)
     {
         stateTime += deltaTime;
-        var next = currentState?.OnUpdate(Time.deltaTime);
+        IState next = currentState?.OnUpdate(Time.deltaTime);
         if (next != currentState)
         {
             currentState?.OnExit();

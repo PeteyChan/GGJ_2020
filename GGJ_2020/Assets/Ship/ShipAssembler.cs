@@ -23,8 +23,11 @@ public class ShipAssembler : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.TryFind(out ShipPart part))
+        if (other.gameObject.TryFind(out Player player))
         {
+            var part = player.HeldPart;
+            if (!part) return;
+
             if (!gatheredParts.Contains(part.partID) && part.Holder.Team == Team)
             {
                 part.transform.root.position = transform.position + part.snapPosition;

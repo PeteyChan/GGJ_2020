@@ -36,7 +36,7 @@ public class WalkState : State
         var direction = new Vector3(player.GamePad.LeftStick.x, 0, player.GamePad.LeftStick.y);
         direction = direction.normalized * walkSpeed;
 
-        _rb.velocity = Vector3.Lerp(_rb.velocity, direction, deltaTime * 5f);
+        _rb.velocity = Vector3.Lerp(_rb.velocity, direction, deltaTime * 3f);
         if (direction.magnitude > .1f)
             animate.transform.rotation = Quaternion.Lerp(animate.transform.rotation, Quaternion.LookRotation(direction), deltaTime * 5f);
 
@@ -54,5 +54,6 @@ public class WalkState : State
             return gameObject.Find<DashState>();
 
         return this;
+
     }
 }

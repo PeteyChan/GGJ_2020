@@ -24,7 +24,7 @@ public class SceneLoader : ScriptableObject
     {
         foreach (var item in ShipSpawner.spawners)
         {
-            Destroy(item);
+            Destroy(item.gameObject);
         }
 
         UnityEngine.SceneManagement.SceneManager.LoadScene(Instance.Game);
