@@ -5,18 +5,18 @@
 [RequireComponent(typeof(DropState))]
 public class CarryWalkState : State
 {
-    private Player _player;
+    private ItemCarryController _controller;
     private Rigidbody _rb;
 
     private void Awake()
     {
-        _player = gameObject.Find<Player>();
-        _rb = _player.GetComponent<Rigidbody>();
+        _controller = gameObject.Find<ItemCarryController>();
+        _rb = gameObject.Find<Rigidbody>();
     }
 
     protected override IState OnUpdate(float deltaTime, float stateTime)
     {
-        if (_player.GamePad.GetButton(GamePad.Buttons.face_left).wasPressed)
+        if (_controller.TryDropPart())
         {
             return GetComponent<DropState>();
         }

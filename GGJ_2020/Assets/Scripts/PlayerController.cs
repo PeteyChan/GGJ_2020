@@ -32,6 +32,18 @@ public class PlayerController : MonoBehaviour
         _canMove = state;
     }
 
+    public bool TryAddHeldPartToShip()
+    {
+        if (_player.NearbyShip != null && _player.HeldPart != null)//&& ship.Team == GameSettings.GetPlayerInfo(_player.PlayerNumber).Team)
+        {
+            _player.NearbyShip.AddPart(_player.HeldPart);
+            _player.HeldPart = null;
+            return true;
+        }
+
+        return false;
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         ShipPart part = collision.gameObject.GetComponent<ShipPart>();
@@ -39,6 +51,14 @@ public class PlayerController : MonoBehaviour
         if (part != null && _player.NearbyPart != part)
         {
             _player.NearbyPart = part;
+            return;
+        }
+
+        BrokenShip ship = collision.gameObject.GetComponent<BrokenShip>();
+
+        if (ship != null && _player.NearbyShip != ship)
+        {
+            _player.NearbyShip = ship;
         }
     }
 
@@ -46,9 +66,26 @@ public class PlayerController : MonoBehaviour
     {
         ShipPart part = collision.gameObject.GetComponent<ShipPart>();
 
-        if (part != null && _player.NearbyPart == part)
+        if (part != null)
         {
-            _player.NearbyPart = null;
+            if (_player.NearbyPart == part)
+            {
+                _player.NearbyPart = null;
+            }
+
+            return;
+        }
+
+        BrokenShip ship = collision.gameObject.GetComponent<BrokenShip>();
+
+        if (ship != null)
+        {
+            if (_player.NearbyShip == ship)
+            {
+                _player.NearbyShip = null;
+            }
+
+            return;
         }
     }
 }
