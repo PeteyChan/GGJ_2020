@@ -6,7 +6,39 @@ using UnityEngine;
 [Attributes.AlwaysRepaint]
 public class Doodad : MonoBehaviour
 {
+    public static Dictionary<int2, GameObject> lookup = new Dictionary<int2, GameObject>();
 
+    public static GameObject GetDoodadAtLocation(int2 position)
+    {
+        if (lookup.TryGetValue(position, out var val))
+            return val;
+        return null;
+    }
+
+    public static GameObject GetDoodadAtLocation(Vector3 position)
+    {
+        var pos = new int2(Mathf.RoundToInt(position.x), Mathf.RoundToInt(position.z));
+        if (lookup.TryGetValue(pos, out var val))
+            return val;
+        return null;
+
+    }
+
+    int2 pos => new int2(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.z));
+
+    private void OnEnable()
+    {
+        if (lookup.TryGetValue(pos, out var go))
+        {
+            Destroy(go);
+        }
+        lookup[pos] = gameObject;
+    }
+
+    private void OnDisable()
+    {
+        lookup[pos] = null;
+    }
 }
 
 #if UNITY_EDITOR

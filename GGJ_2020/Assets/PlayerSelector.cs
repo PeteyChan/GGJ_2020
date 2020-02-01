@@ -12,6 +12,8 @@ public class PlayerSelector : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameSettings.GetPlayerInfo(Player).Playing = false;
+
         pad = new GamePad(Player);
         foreach (Transform t in transform)
         {
@@ -22,14 +24,16 @@ public class PlayerSelector : MonoBehaviour
         rect = GetComponent<RectTransform>();
     }
 
-    public float left;
-    public float right;
-
     // Update is called once per frame
     void Update()
     {
         if (pad.GetButton(GamePad.Buttons.start).wasPressed)
         {
+            if (GameSettings.GetPlayerInfo(Player).Playing && GameSettings.CanStart())
+            {
+                SceneLoader.ToGame();
+                return;
+            }
             foreach (Transform t in transform)
                 t.gameObject.SetActive(true);
 

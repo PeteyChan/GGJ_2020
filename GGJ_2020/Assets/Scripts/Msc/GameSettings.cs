@@ -25,6 +25,16 @@ public static class GameSettings
         public Team Team = Team.Red;
     }
 
+    public static List<(int player, PlayerInfo info)> GetPlayers(Team team)
+    {
+        List<(int, PlayerInfo)> info = new List<(int, PlayerInfo)>();
+        for (int i = 0; i < Players.Count; ++i)
+            if (Players[i].Team == team && Players[i].Playing)
+                info.Add((i, Players[i]));
+        return info;
+
+    }
+
     public static bool CanStart()
     {
         int redCount = 0;

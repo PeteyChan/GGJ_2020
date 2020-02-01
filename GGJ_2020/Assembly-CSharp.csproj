@@ -70,6 +70,7 @@
     <Compile Include="Assets\Scripts\Msc\GameSettings.cs" />
     <Compile Include="Assets\Scripts\Msc\Layers.cs" />
     <Compile Include="Assets\Scripts\Msc\SceneLoader.cs" />
+    <Compile Include="Assets\Scripts\Msc\ShipSpawner.cs" />
     <Compile Include="Assets\Scripts\MultiplayerZoomCamera.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
@@ -83,6 +84,8 @@
     <Compile Include="Assets\Scripts\States\WalkState.cs" />
     <Compile Include="Assets\Scripts\UI\ExitApplication.cs" />
     <Compile Include="Assets\Scripts\UI\LaunchScene.cs" />
+    <Compile Include="Assets\Scripts\UI\StartGame.cs" />
+    <Compile Include="Assets\Scripts\UI\ToTeamSelect.cs" />
     <Compile Include="Assets\ShipPart.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
