@@ -39,12 +39,13 @@ public class ItemCarryController : MonoBehaviour
 
     public void BeginDropPart()
     {
-        Destroy(_player.HeldPart.GetComponent<HingeJoint>());
         _controller.AllowMovement(false);
     }
 
     public void EndDropPart()
     {
+        Destroy(_player.HeldPart.GetComponent<HingeJoint>());
+        _controller.TryAddHeldPartToShip();
         _player.HeldPart = null;
         _controller.AllowMovement(true);
     }
