@@ -10,10 +10,14 @@ public class ShipAssembler : MonoBehaviour
 
     private void Start()
     {
-        AudioSource audio = Instantiate(new GameObject()).AddComponent<AudioSource>();
-        audio.clip = GameSounds.Instance.BackgroundMusic;
-        audio.loop = true;
-        audio.Play();
+        if (Team == GameSettings.Team.Red) //not sorry
+        {
+            //also not sorry
+            AudioSource audio = Instantiate(new GameObject("Music")).AddComponent<AudioListener>().gameObject.AddComponent<AudioSource>();
+            audio.clip = GameSounds.Instance.BackgroundMusic;
+            audio.loop = true;
+            audio.Play();
+        }
 
         foreach (var renderer in GetComponentsInChildren<Renderer>())
         {
@@ -37,7 +41,7 @@ public class ShipAssembler : MonoBehaviour
                 part.transform.root.rotation = Quaternion.identity;
                 gatheredParts.Add(part.partID);
 
-                AudioSource.PlayClipAtPoint(GameSounds.Instance.PartPlacement, transform.position);
+                AudioSource.PlayClipAtPoint(GameSounds.Instance.PartPlacement, FindObjectOfType<AudioListener>().transform.position);
                 part.gameObject.transform.DetachChildren();
                 Destroy(part);
             }

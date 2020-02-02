@@ -8,9 +8,13 @@ public class Player : MonoBehaviour
 {
     static List<Player> players = new List<Player>();
 
+    private GameObject _stars;
+
     private void Awake()
     {
         players.Add(this);
+        _stars = gameObject.Find<DazedStarsRotation>().gameObject;
+        _stars.SetActive(false);
     }
 
     private void OnDestroy()
@@ -66,6 +70,11 @@ public class Player : MonoBehaviour
         {
             transform.position = hit.point;
         }
+    }
+
+    public void SetDazed(bool state)
+    {
+        _stars.SetActive(state);
     }
 
 

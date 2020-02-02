@@ -8,7 +8,6 @@ public class KnockedDownState : State
     Rigidbody Rigidbody;
     Vector3 enterVel;
     Player Player;
-    DazedStarsRotation stars;
 
     public Vector3 knockedDownForce;
 
@@ -17,12 +16,11 @@ public class KnockedDownState : State
         gameObject.TryFind(out Player);
         gameObject.TryFind(out animate);
         gameObject.TryFind(out Rigidbody);
-        gameObject.TryFind(out stars);
     }
 
     protected override void OnEnter()
     {
-        AudioSource.PlayClipAtPoint(GameSounds.Instance.KnockDown, transform.position);
+        AudioSource.PlayClipAtPoint(GameSounds.Instance.KnockDown, FindObjectOfType<AudioListener>().transform.position);
         enterVel = Rigidbody.velocity;
 
         droppedPart = false;
@@ -36,7 +34,7 @@ public class KnockedDownState : State
             droppedPart = true;
         }
 
-        stars.gameObject.SetActive(true);
+        Player.SetDazed(true);
     }
 
     bool droppedPart;
@@ -62,6 +60,6 @@ public class KnockedDownState : State
 
     protected override void OnExit()
     {
-        stars.gameObject.SetActive(false);
+        Player.SetDazed(false);
     }
 }

@@ -309,7 +309,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DefaultSubState: {fileID: 0}
   clip: {fileID: -623603649343465320, guid: cdf5e9d9bbdcb314798a9763db3ea7e3, type: 3}
-  sound: {fileID: 8300000, guid: dfd85070cff43f94dba0054dc064ecb3, type: 3}
   pickupTime: 0.6
   heldTime: 1
 --- !u!114 &4931408575537792332
@@ -1123,7 +1122,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6400350108818657992
 Transform:
   m_ObjectHideFlags: 0
@@ -1265,7 +1264,6 @@ MonoBehaviour:
   _dashLengthInSeconds: 0.5
   dashSpeed: 5
   clip: {fileID: -623603649343465320, guid: 2619199b14e8fd248a6c39c8632c2dc6, type: 3}
-  sound: {fileID: 8300000, guid: 0e46069756f7ef14581daf3aff51f7c8, type: 3}
 --- !u!114 &6510632725321617785
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1280,7 +1278,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DefaultSubState: {fileID: 0}
   clip: {fileID: -623603649343465320, guid: 7b8b515477c611e41ab9c7c3a3774c2a, type: 3}
-  sound: {fileID: 8300000, guid: 415befc15bdc8314096d6c2424951540, type: 3}
   knockedDownForce: {x: 0, y: 0, z: 0}
 --- !u!1 &6956233985746901417
 GameObject:
