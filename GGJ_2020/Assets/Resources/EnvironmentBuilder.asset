@@ -40,7 +40,7 @@ MonoBehaviour:
     Walkable: 0
   SizeX: 40
   SizeY: 30
-  TerrainSeed: 729127848
-  DoodadSeed: 884734018
+  TerrainSeed: -978022764
+  DoodadSeed: 2017814422
   MirrorTerrain: 1
   MirrorDoodads: 1

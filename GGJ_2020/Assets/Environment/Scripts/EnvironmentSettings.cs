@@ -191,6 +191,12 @@ public class EnvironmentSettings : ScriptableObject
         barrier.size = new Vector3((SizeX * 2) + 2, 5, 1);
         //bot bounds
         barrier = Instantiate(barrier, new Vector3(0, 0, -1), Quaternion.identity);
+
+        var cliff = Resources.Load<GameObject>("Cliff");
+        for (int x = -SizeX; x < SizeX+25; x += 50)
+        {
+            Instantiate(cliff, new Vector3(x, 0, SizeY), Quaternion.identity);
+        }
     }
 }
 
