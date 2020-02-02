@@ -74,6 +74,8 @@
     <Compile Include="Assets\RandomMaterial.cs" />
     <Compile Include="Assets\RandomRotation.cs" />
     <Compile Include="Assets\Scripts\BrokenShip.cs" />
+    <Compile Include="Assets\Scripts\DazedStarsRotation.cs" />
+    <Compile Include="Assets\Scripts\GameSounds.cs" />
     <Compile Include="Assets\Scripts\ItemCarryController.cs" />
     <Compile Include="Assets\Scripts\Msc\GameSettings.cs" />
     <Compile Include="Assets\Scripts\Msc\Layers.cs" />

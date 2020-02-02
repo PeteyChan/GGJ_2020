@@ -75,9 +75,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   propogate: 1
   materials:
-  - {fileID: 2100000, guid: cd704ab20fc0f494d9bc846973fbb200, type: 2}
   - {fileID: 2100000, guid: 3e1171f5e4f0bb440b184d91acdb16a5, type: 2}
-  - {fileID: 2100000, guid: 929bf36e60229804199e030c9743f516, type: 2}
+  - {fileID: 2100000, guid: 753ad2ca60b987e49b8f15664f21ef27, type: 2}
+  - {fileID: 2100000, guid: d86667ba6cb383046911753844ced133, type: 2}
 --- !u!1001 &8065308835546212506
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -85,6 +85,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8065308833790566978}
     m_Modifications:
+    - target: {fileID: -7780734103960978560, guid: ccf411f2a0325254191788d58b377b5b,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d86667ba6cb383046911753844ced133, type: 2}
     - target: {fileID: -4216859302048453862, guid: ccf411f2a0325254191788d58b377b5b,
         type: 3}
       propertyPath: m_LocalPosition.x

@@ -20,6 +20,9 @@ MonoBehaviour:
     TerrainType: {fileID: 9137133600623835405, guid: e103c3fa210a0a9489adc06ca53a1d4d,
       type: 3}
   - Weighting: 1
+    TerrainType: {fileID: 9137133600623835405, guid: c35bba074be97b1448dd192c053b2747,
+      type: 3}
+  - Weighting: 1
     TerrainType: {fileID: 9137133600623835405, guid: 0c5c28cf5607f6240908407670367173,
       type: 3}
   Doodads:
