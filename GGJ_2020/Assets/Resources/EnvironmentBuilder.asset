@@ -26,24 +26,32 @@ MonoBehaviour:
     TerrainType: {fileID: 9137133600623835405, guid: 0c5c28cf5607f6240908407670367173,
       type: 3}
   Doodads:
-  - Weighting: 1
+  - Weighting: 100
     Doodad: {fileID: 7445517992994692739, guid: 1556c9a9cb6b4474c984e289bb4cb9b5,
       type: 3}
     Walkable: 0
-  - Weighting: 1
+  - Weighting: 100
     Doodad: {fileID: 7445517992994692739, guid: 94d42a3680a211c46b1c38b230a5f9d5,
       type: 3}
     Walkable: 0
-  - Weighting: 3
+  - Weighting: 2
+    Doodad: {fileID: 3010898558547200378, guid: 8aa1df97da20e2340ae1a70b0c8f676f,
+      type: 3}
+    Walkable: 0
+  - Weighting: 5
+    Doodad: {fileID: 3010898558547200378, guid: c168a3df3a03a234d8ef73d4c9a4e7b7,
+      type: 3}
+    Walkable: 0
+  - Weighting: 300
     Doodad: {fileID: 7445517992994692739, guid: 70943b4ce8fa2174b868989750775cf2,
       type: 3}
     Walkable: 1
-  - Weighting: 7
+  - Weighting: 700
     Doodad: {fileID: 0}
     Walkable: 0
   SizeX: 40
   SizeY: 30
-  TerrainSeed: -1632343751
-  DoodadSeed: 1118241747
+  TerrainSeed: 174390388
+  DoodadSeed: -31916591
   MirrorTerrain: 1
   MirrorDoodads: 1
