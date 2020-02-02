@@ -27,6 +27,7 @@ public class PickupState : State
         var part = player.GetPart();
 
         Animate.Play(clip);
+        AudioSource.PlayClipAtPoint(GameSounds.Instance.Lifting, transform.position);
         partPos = part.transform.position;
         part.Holder = player;
         player.HeldPart = part;

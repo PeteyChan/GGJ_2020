@@ -6,12 +6,15 @@ public class ShipAssembler : MonoBehaviour
 {
     public GameSettings.Team Team;
 
-    int amount = 0;
-
     HashSet<int> gatheredParts = new HashSet<int>();
 
     private void Start()
     {
+        AudioSource audio = Instantiate(new GameObject()).AddComponent<AudioSource>();
+        audio.clip = GameSounds.Instance.BackgroundMusic;
+        audio.loop = true;
+        audio.Play();
+
         foreach (var renderer in GetComponentsInChildren<Renderer>())
         {
             if (Team == GameSettings.Team.Red)
@@ -34,6 +37,7 @@ public class ShipAssembler : MonoBehaviour
                 part.transform.root.rotation = Quaternion.identity;
                 gatheredParts.Add(part.partID);
 
+                AudioSource.PlayClipAtPoint(GameSounds.Instance.PartPlacement, transform.position);
                 part.gameObject.transform.DetachChildren();
                 Destroy(part);
             }
