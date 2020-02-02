@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="Assets\BuildLevel.cs" />
     <Compile Include="Assets\ChangeWinningColor.cs" />
+    <Compile Include="Assets\CrabBehaviour.cs" />
     <Compile Include="Assets\Environment\Scripts\Doodad.cs" />
     <Compile Include="Assets\Environment\Scripts\EnvironmentSettings.cs" />
     <Compile Include="Assets\Environment\test.cs" />

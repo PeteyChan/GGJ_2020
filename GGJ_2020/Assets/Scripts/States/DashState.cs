@@ -22,6 +22,8 @@ public class DashState : State
 
     Vector3 enterVel;
 
+    public Vector3 enterPOs;
+
     protected override void OnEnter()
     {
         player.DoodadCollision = null;
@@ -30,8 +32,7 @@ public class DashState : State
         animate.Speed = 6;
         animate.Play(clip, .1f);
 
-        enterVel = Rigidbody.velocity;
-
+        enterPOs = Rigidbody.position;
         speed = dashSpeed;
     }
 
@@ -68,7 +69,7 @@ public class DashState : State
         if (player.PlayerCollision)
         {
             var knockDown = player.PlayerCollision.gameObject.Find<KnockedDownState>();
-            knockDown.knockedDownForce = Rigidbody.velocity;
+            knockDown.knockedDownForce = (Rigidbody.position - enterPOs)/stateTime;
             player.PlayerCollision.gameObject.Find<StateMachine>().ChangeState(knockDown);
             return gameObject.Find<KnockedDownState>();
         }

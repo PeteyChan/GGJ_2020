@@ -16,6 +16,8 @@ public class ShipSpawner : MonoBehaviour
         yield return null;
         transform.position = new Vector3(GameSettings.MapSize.x / 2, 0, GameSettings.MapSize.y / 2);
 
+        Instantiate(Resources.Load("Crab"), transform.position, Quaternion.identity);
+
         if (Team == GameSettings.Team.Red)
             transform.position = new Vector3(-transform.position.x, 0, transform.position.z);
 
