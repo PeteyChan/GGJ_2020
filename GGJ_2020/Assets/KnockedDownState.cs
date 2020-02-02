@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class KnockedDownState : State
 {
@@ -19,9 +17,10 @@ public class KnockedDownState : State
         gameObject.TryFind(out animate);
         gameObject.TryFind(out Rigidbody);
     }
-    
+
     protected override void OnEnter()
     {
+        AudioSource.PlayClipAtPoint(GameSounds.Instance.KnockDown, FindObjectOfType<AudioListener>().transform.position);
         enterVel = Rigidbody.velocity;
 
         droppedPart = false;
@@ -34,6 +33,8 @@ public class KnockedDownState : State
             Player.HeldPart = null;
             droppedPart = true;
         }
+
+        Player.SetDazed(true);
     }
 
     bool droppedPart;
@@ -57,4 +58,8 @@ public class KnockedDownState : State
         return this;
     }
 
+    protected override void OnExit()
+    {
+        Player.SetDazed(false);
+    }
 }

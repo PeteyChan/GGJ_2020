@@ -6,6 +6,10 @@ public class Winner : MonoBehaviour
 {
     private void Start()
     {
+        AudioSource audio = Instantiate(new GameObject("Audio")).AddComponent<AudioListener>().gameObject.AddComponent<AudioSource>();
+        audio.clip = GameSounds.Instance.GameOver;
+        audio.Play();
+
         GetComponent<UnityEngine.UI.Text>().text = $"{(GameSettings.WinningTeam == GameSettings.Team.Red ? "Red" : "Blue")} WINS!!";
         for (int i = 0; i < 4; ++i)
             pads.Add(new GamePad(i));

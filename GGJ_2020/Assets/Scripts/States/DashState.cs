@@ -26,6 +26,7 @@ public class DashState : State
 
     protected override void OnEnter()
     {
+        AudioSource.PlayClipAtPoint(GameSounds.Instance.Dash, FindObjectOfType<AudioListener>().transform.position);
         player.DoodadCollision = null;
         player.PlayerCollision = null;
 
